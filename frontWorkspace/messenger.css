@@ -1,0 +1,81 @@
+#messenger-write {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(57, 194, 57);
+  border: none;
+  margin-top: 10%;
+  margin-right: 10%;
+  margin-left: 10%;
+}
+
+#messenger-write button{
+  border: none;
+  background-color: rgb(57, 194, 57);
+  cursor: pointer;
+  height: 40px;
+}
+
+#messenger-status{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+
+#messenger-status button{
+  border: none;
+  cursor: pointer;
+}
+
+#all-messenger p{
+  margin-top: 10%;
+  margin-left: 10%;
+}
+#all-messenger:hover{
+  background-color: rgb(199, 231, 241);
+  cursor: pointer;
+}
+
+#receive-messenger p{
+  margin-top: 10%;
+  margin-left: 10%;
+}
+#receive-messenger:hover{
+  background-color: rgb(199, 231, 241);
+  cursor: pointer;
+}
+
+#send-messenger p{
+  margin-top: 10%;
+  margin-left: 10%;
+}
+#send-messenger:hover{
+  background-color: rgb(199, 231, 241);
+  cursor: pointer;
+}
+
+#messenger-search{
+  margin-left: 5%;
+  margin-top: 5%;
+  display: flex;
+}
+
+#messenger-check{
+  display: flex;
+  margin-top: 5%;
+}
+
+#check-all {
+  margin-left: 5%;
+}
+
+#check-delete{
+  margin-left: 5%;
+}
+
+#messenger-content{
+  display: flex;
+  margin-top: 15%;
+  margin-left: 5%;
+}
