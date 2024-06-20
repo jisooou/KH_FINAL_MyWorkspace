@@ -1,67 +1,173 @@
+/* nav---------------------------- */
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+nav {
+  width: 100%;
+  height: 5%;
+  border-top: 1px solid rgb(194, 194, 194);
+  border-bottom: 1px solid rgb(194, 194, 194);
+  display: flex;
+  justify-content: space-between;
+}
+
+#right-sidebar {
+  display: flex;
+  align-items: center;
+}
+
+#right-sidebar div img {
+  width: 50px;
+  height: 45px;
+}
+
+#right-sidebar div button {
+  background-color: transparent;
+  border: none;
+}
+
+#right-sidebar div button img {
+  width: 30px;
+  height: 30px;
+  background-color: rgb(255, 255, 255);
+}
+
+#right-sidebar div:nth-child(2) {
+  margin-left: 10px;
+}
+
+#right-sidebar div:nth-child(3) {
+  font-size: 23px;
+  margin-left: 10px;
+  font-weight: 500;
+  color: rgb(70, 70, 70);
+}
+
+#left-sidebar {
+  display: flex;
+  align-items: center;
+}
+
+#left-sidebar div a img {
+  width: 30px;
+  height: 30px;
+}
+
+#left-sidebar div button {
+  background-color: transparent;
+  border: none;
+}
+
+#left-sidebar div button img {
+  width: 30px;
+  height: 30px;
+}
+
+#left-sidebar div:nth-child(1),
+#left-sidebar div:nth-child(2),
+#left-sidebar div:nth-child(3),
+#left-sidebar div:nth-child(4),
+#left-sidebar div:nth-child(5),
+#left-sidebar div:nth-child(6),
+#left-sidebar div:nth-child(7),
+#left-sidebar div:nth-child(8) {
+  margin-right: 10px;
+}
+
+main {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#sidebar {
+  width: 15%;
+  height: 95%;
+  background-color: rgba(229, 229, 229, 0.5);
+}
+
+#content {
+  width: 85%;
+  height: auto;
+}
+
+/* --------------------------------------------- */
+
 #messenger-write {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(57, 194, 57);
+  background-color: rgb(57, 57, 252);
   border: none;
   margin-top: 10%;
   margin-right: 10%;
   margin-left: 10%;
+  border-radius: 10px;
 }
 
-#messenger-write button{
+#messenger-write button {
   border: none;
-  background-color: rgb(57, 194, 57);
+  background-color: rgb(57, 57, 252);
+  color: white;
+  font-weight: bolder;
+  font-size: medium;
   cursor: pointer;
   height: 40px;
 }
 
-#messenger-status{
+#messenger-status {
   display: flex;
   justify-content: space-around;
   margin-top: 10%;
   margin-bottom: 10%;
 }
 
-#messenger-status button{
+#messenger-status button {
   border: none;
   cursor: pointer;
 }
 
-#all-messenger p{
+#all-messenger p {
   margin-top: 10%;
   margin-left: 10%;
 }
-#all-messenger:hover{
+#all-messenger:hover {
   background-color: rgb(199, 231, 241);
   cursor: pointer;
 }
 
-#receive-messenger p{
+#receive-messenger p {
   margin-top: 10%;
   margin-left: 10%;
 }
-#receive-messenger:hover{
+#receive-messenger:hover {
   background-color: rgb(199, 231, 241);
   cursor: pointer;
 }
 
-#send-messenger p{
+#send-messenger p {
   margin-top: 10%;
   margin-left: 10%;
 }
-#send-messenger:hover{
+#send-messenger:hover {
   background-color: rgb(199, 231, 241);
   cursor: pointer;
 }
 
-#messenger-search{
+#messenger-search {
   margin-left: 5%;
   margin-top: 5%;
   display: flex;
 }
 
-#messenger-check{
+#messenger-check {
   display: flex;
   margin-top: 5%;
 }
@@ -70,12 +176,117 @@
   margin-left: 5%;
 }
 
-#check-delete{
+#check-delete {
   margin-left: 5%;
 }
 
-#messenger-content{
+#messenger-content {
   display: flex;
   margin-top: 15%;
   margin-left: 5%;
+  align-items: center;
+}
+#messenger-content:hover {
+  background-color: aliceblue;
+}
+
+#messenger-content div {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-right: 5%;
+}
+
+/* checkbox 색 변경하기 */
+/* 중요메일 checkbox만 빨간색 */
+#checkbox-important:checked {
+  accent-color: red;
+}
+
+#list-content {
+  margin-left: 40%;
+}
+
+#list-date {
+  margin-left: 120%;
+}
+
+#messenger-write-page {
+  width: 50%;
+  height: 800px;
+  background-color: rgb(238, 235, 235);
+}
+
+#messenger-send-btn {
+  background-color: rgb(57, 57, 252);
+  color: white;
+  border-radius: 5px;
+  width: 10%;
+  height: 40px;
+  cursor: pointer;
+  border-width: 1px;
+  margin-top: 3%;
+  margin-left: 3%;
+  margin-right: 3%;
+  margin-bottom: 3%;
+}
+
+#messenger-save-btn {
+  color: black;
+  border-radius: 5px;
+  width: 10%;
+  height: 40px;
+  cursor: pointer;
+  border-width: 1px;
+}
+
+/* 쪽지 쓸 때 들어가야 할 정보들 */
+#messenger-infor-receiver {
+  display: flex;
+  margin-bottom: 3%;
+  margin-top: 3%;
+}
+#receiver-name {
+  margin-left: 3%;
+  font-weight: bold;
+}
+#receiver-text {
+  width: 60%;
+  margin-left: 8%;
+}
+
+#messenger-infor-title {
+  display: flex;
+}
+#messenger-title {
+  margin-left: 3%;
+  font-weight: bold;
+}
+#title-text {
+  width: 60%;
+  margin-left: 11.2%;
+}
+
+#messenger-infor-file {
+  display: flex;
+}
+#messenger-file {
+  margin-left: 3%;
+  margin-top: 3%;
+  font-weight: bold;
+}
+#file-upload {
+  width: 60%;
+  margin-left: 8%;
+  margin-top: 3%;
+  cursor: pointer;
+  height: 50px;
+}
+
+#messenger-write-content {
+  display: flex;
+}
+#content-text {
+  margin-top: 8%;
+  width: 100%;
+  height: 440px;
 }
