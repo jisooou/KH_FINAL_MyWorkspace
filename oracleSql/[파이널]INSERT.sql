@@ -1,5 +1,14 @@
 INSERT INTO MESSENGER (MESSEN_NO, RECEIVER_EMP_NO, TITLE, CONTENT, SEND_DATE) VALUES (SEQ_MESSENGER.NEXTVAL, 2, '제목', '내용', SYSDATE);
 
+--사원 주소록 조회(쪽지 작성할 때)
+SELECT
+    E.NAME
+    , P.NAME
+    , D.NAME
+FROM EMPLOYEE E
+JOIN POSITION P ON E.POSITION_NO = P.NO
+JOIN DEPARTMENT D ON E.DEPT_NO = D.NO
+;
 
 
 --쪽지 받은 쪽지함 목록조회(사원이름 나오게)
@@ -29,6 +38,7 @@ ORDER BY M.SEND_DATE DESC
 
 --쪽지 전체 목록조회(사원이름 나오게)
 SELECT 
+    M.MESSEN_NO,
     '받은 쪽지' AS MSG_TYPE, 
     E.NAME AS EMP_NAME,
     M.TITLE,
@@ -41,6 +51,7 @@ ON M.RECEIVER_EMP_NO = E.NO
 UNION ALL
 
 SELECT 
+    M.MESSEN_NO,
     '보낸 쪽지' AS MSG_TYPE, 
     E.NAME AS EMP_NAME,
     M.TITLE,
