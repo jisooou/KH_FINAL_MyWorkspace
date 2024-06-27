@@ -38,6 +38,22 @@ WHERE M.SENDER_EMP_NO = 1
 ORDER BY M.SEND_DATE DESC
 ;
 
+--쪽지 상세조회(사원이름-받는사람/보낸사람 둘 다 나오게) 
+SELECT 
+    M.TITLE
+    , E1.NAME AS senderName
+    , E2. NAME As receiverName
+    , M.SEND_DATE
+    , M.CONTENT
+FROM MESSENGER M 
+JOIN EMPLOYEE E1 ON M.SENDER_EMP_NO = E1.NO
+JOIN EMPLOYEE E2 ON M.RECEIVER_EMP_NO = E2.NO
+WHERE M.MESSEN_NO = 1
+;
+
+--쪽지 목록에서 해당 쪽지 번호로 상세조회
+SELECT
+
 
 --쪽지 전체 목록조회(사원이름 나오게)
 SELECT 
@@ -89,17 +105,17 @@ WHERE MESSEN_NO = 1;
 
 
 --중요 쪽지 목록 조회(최신순)
-SELECT 
-    E.NAME
-    , M.TITLE
-    , M.CONTENT
-    , M.SEND_DATE 
-FROM MESSENGER M 
-JOIN EMPLOYEE E 
-ON M.SENDER_EMP_NO = E.NO 
-WHERE M.IMPORTANT_YN = 'Y' AND M.SENDER_EMP_NO = 1 
-
-UNION ALL
+--SELECT 
+--    E.NAME
+--    , M.TITLE
+--    , M.CONTENT
+--    , M.SEND_DATE 
+--FROM MESSENGER M 
+--JOIN EMPLOYEE E 
+--ON M.SENDER_EMP_NO = E.NO 
+--WHERE M.IMPORTANT_YN = 'Y' AND M.SENDER_EMP_NO = 1 
+--
+--UNION ALL
 
 SELECT 
     E.NAME
