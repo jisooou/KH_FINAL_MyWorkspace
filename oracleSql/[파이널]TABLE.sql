@@ -265,7 +265,7 @@ CREATE TABLE EMPLOYEE (
     ,PWD                    VARCHAR2(100)
     ,PROFILE                VARCHAR2(3000)
     ,PHONE                  CHAR(11)
-    ,HIRE_DATE              DATE
+    ,HIRE_DATE              DATE            DEFAULT SYSDATE
     ,ENT_YN                 CHAR(1)         DEFAULT 'N' CHECK(ENT_YN IN ('Y', 'N'))
     ,ENT_DATE               DATE
     ,LOGIN_FAIL_NUM         NUMBER
@@ -369,8 +369,8 @@ CREATE TABLE TODO (
 
 CREATE TABLE TODO_MANAGER (
     TODO_MANAGER_NO         NUMBER            
-    ,TODO_NO                NUMBER          
-    ,PRIMARY KEY(TODO_MANAGER_NO, TODO_NO)
+    ,TODO_NO_MAN            NUMBER          
+    ,PRIMARY KEY(TODO_MANAGER_NO, TODO_NO_MAN)
 );
 
 ---설문 테이블 생성
@@ -410,19 +410,19 @@ CREATE TABLE SURVEY_RESPONSE (
 CREATE TABLE ATTEND (
     ATTEND_NO               NUMBER          PRIMARY KEY
     ,EMP_NO                 NUMBER          NOT NULL
-    ,START_TIME             TIMESTAMP       NULL 
+    ,START_TIME             TIMESTAMP       NOT NULL 
     ,END_TIME               TIMESTAMP       NULL 
     ,DEL_YN                 CHAR(1)         DEFAULT 'N' CHECK(DEL_YN IN ('Y', 'N'))
 );
 
 CREATE TABLE MESSENGER (
     MESSEN_NO               NUMBER          PRIMARY KEY
-    ,SENDER_EMP_NO          NUMBER        NULL 
-    ,RECEIVER_EMP_NO        NUMBER         NULL 
-    ,MESSENBOX_TYPE_NO      NUMBER      NULL
-    ,TITLE                  VARCHAR2(100)   NULL
-    ,CONTENT                VARCHAR2(1000)  NULL
-    ,SEND_DATE              TIMESTAMP       NULL 
+    ,SENDER_EMP_NO          NUMBER          NOT NULL 
+    ,RECEIVER_EMP_NO        NUMBER          NOT NULL 
+    ,MESSENBOX_TYPE_NO      NUMBER          NULL
+    ,TITLE                  VARCHAR2(100)   NOT NULL
+    ,CONTENT                VARCHAR2(1000)  NOT NULL
+    ,SEND_DATE              TIMESTAMP       NOT NULL 
     ,READ_YN                CHAR(1)         DEFAULT 'N' CHECK(READ_YN IN ('Y', 'N')) 
     ,IS_SAVE                CHAR(1)         DEFAULT 'N' CHECK(IS_SAVE IN ('Y', 'N'))  
     ,UPDATE_DATE            TIMESTAMP       NULL 
@@ -587,9 +587,9 @@ FOREIGN KEY (TODO_MANAGER_NO)
 REFERENCES EMPLOYEE(NO); 
 
 --투두 참여자테이블에 투두번호
-ALTER TABLE TODO
+ALTER TABLE TODO_MANAGER
 ADD CONSTRAINT FK_TODO_NO
-FOREIGN KEY (TODO_NO)
+FOREIGN KEY (TODO_NO_MAN)
 REFERENCES TODO(TODO_NO);
 
 --투두테이블에 생성사원번호

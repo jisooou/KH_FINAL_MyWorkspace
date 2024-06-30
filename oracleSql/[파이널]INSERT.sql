@@ -84,6 +84,16 @@ WHERE M.RECEIVER_EMP_NO = 1
 
 ORDER BY SEND_DATE DESC;
 
+--특정 쪽지 조회하기 - 쪽지를 수신한 사람이 쪽지를 읽어야 읽음처리되도록 설정하기 위함.  
+SELECT 
+    MESSEN_NO 
+    , SENDER_EMP_NO
+    , RECEIVER_EMP_NO 
+    , TITLE
+    , CONTENT
+    , SEND_DATE 
+FROM MESSENGER WHERE MESSEN_NO = 1
+;
 
 --읽지 않은 쪽지 목록 조회(최신순) 
 SELECT 
@@ -137,3 +147,20 @@ WHERE MESSEN_NO = 1;
 
 --검색기능 - 사원 이름으로 검색 
 
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+--근태관리 기능 여기서부터 시작
+
+--출근 찍기 (INSERT 하기)
+INSERT INTO ATTEND (
+    ATTEND_NO
+    , EMP_NO
+    , START_TIME
+) 
+VALUES (
+    SEQ_ATTEND.NEXTVAL
+    , 2
+    , SYSDATE
+);
