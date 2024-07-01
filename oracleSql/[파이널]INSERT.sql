@@ -164,3 +164,33 @@ VALUES (
     , 2
     , SYSDATE
 );
+
+
+--홈 화면에 사원정보 및 출퇴근 정보 띄우기 (SUBSTR 사용해서 시간 자르기)
+--근데 이 쿼리문 session에 postionNo랑 deptNo 담아줘서(이후 변경함) 사용 안 함. 
+SELECT 
+    E.NAME
+    ,E.PROFILE
+    ,P.NAME AS positionNo
+    ,D.NAME AS deptNo
+    ,SUBSTR(TO_CHAR(A.START_TIME, 'RR/MM/DD HH24:MI:SS'), 1, 19) AS START_TIME
+    ,SUBSTR(TO_CHAR(A.END_TIME, 'RR/MM/DD HH24:MI:SS'), 1, 19) AS END_TIME
+FROM EMPLOYEE E
+JOIN DEPARTMENT D ON D.NO = E.DEPT_NO
+JOIN POSITION P ON P.NO = E.POSITION_NO
+JOIN ATTEND A ON A.EMP_NO = E.NO
+;
+
+--출퇴근 정보 띄우기 (SUBSTR 사용해서 시간 자르기) - ATTEND 테이블만 사용해서
+SELECT 
+    ATTEND_NO
+    ,EMP_NO
+    ,SUBSTR(TO_CHAR(START_TIME, 'RR/MM/DD HH24:MI:SS'), 1, 19) AS START_TIME
+    ,SUBSTR(TO_CHAR(END_TIME, 'RR/MM/DD HH24:MI:SS'), 1, 19) AS END_TIME 
+FROM ATTEND;
+
+
+--퇴근 찍기 (UPDATE 하기)
+UPDATE ATTEND
+SET END_TIME = CURRENT_TIMESTAMP
+WHERE EMP_NO = 1;

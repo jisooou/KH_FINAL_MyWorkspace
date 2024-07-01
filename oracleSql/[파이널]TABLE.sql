@@ -369,9 +369,23 @@ CREATE TABLE TODO (
 
 CREATE TABLE TODO_MANAGER (
     TODO_MANAGER_NO         NUMBER            
-    ,TODO_NO_MAN            NUMBER          
+    ,TODO_NO_MAN            NUMBER     
+    ,DEL_YN                 CHAR(1)         DEFAULT 'N' CHECK(DEL_YN IN ('Y', 'N'))
     ,PRIMARY KEY(TODO_MANAGER_NO, TODO_NO_MAN)
 );
+
+--ToDo 트리거
+CREATE OR REPLACE TRIGGER update_todo_manager_del_yn
+AFTER UPDATE OF DEL_YN ON TODO
+FOR EACH ROW
+BEGIN
+    IF :NEW.DEL_YN = 'Y' AND :NEW.TODO_NO = 1 THEN
+        UPDATE TODO_MANAGER
+        SET DEL_YN = 'Y'
+        WHERE TODO_NO_MAN = :NEW.TODO_NO;
+    END IF;
+END;
+/
 
 ---설문 테이블 생성
 CREATE TABLE SURVEY (
