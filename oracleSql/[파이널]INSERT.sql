@@ -1,3 +1,5 @@
+--쪽지 기능 여기서부터 시작
+
 INSERT INTO MESSENGER (MESSEN_NO, RECEIVER_EMP_NO, TITLE, CONTENT, SEND_DATE) VALUES (SEQ_MESSENGER.NEXTVAL, 2, '제목', '내용', SYSDATE);
 
 --사원 주소록 조회(쪽지 작성할 때)
@@ -52,7 +54,7 @@ WHERE M.MESSEN_NO = 1
 ;
 
 --쪽지 목록에서 해당 쪽지 번호로 상세조회
-SELECT
+--SELECT
 
 
 --쪽지 전체 목록조회(사원이름 나오게)
@@ -165,6 +167,18 @@ VALUES (
     , SYSDATE
 );
 
+--임의로 테이블 추가
+--INSERT INTO ATTEND (
+--    ATTEND_NO,
+--    EMP_NO,
+--    START_TIME
+--) 
+--VALUES (
+--    SEQ_ATTEND.NEXTVAL,
+--    2,
+--    TO_TIMESTAMP('2024-08-01 19:47:54.000000000', 'YYYY-MM-DD HH24:MI:SS.FF9')
+--);
+
 
 --홈 화면에 사원정보 및 출퇴근 정보 띄우기 (SUBSTR 사용해서 시간 자르기)
 --근데 이 쿼리문 session에 postionNo랑 deptNo 담아줘서(이후 변경함) 사용 안 함. 
@@ -196,11 +210,60 @@ UPDATE ATTEND
 SET END_TIME = CURRENT_TIMESTAMP
 WHERE EMP_NO = 1;
 
---출근 상태 확인하기 (이미 출근한 상태라면 0을 반환) 
+--출근 상태 확인하기 (이미 출근한 상태라면 0을 반환) - alreadyStart
 SELECT COUNT(*)
 FROM ATTEND
-WHERE EMP_NO = 1
+WHERE EMP_NO = 2
 AND START_TIME IS NOT NULL
-AND END_TIME IS NULL;
+AND END_TIME IS NULL
+AND TO_CHAR(START_TIME, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+;
+
+--오늘 출퇴근 상태 확인하기 - alreadyAttend
+SELECT COUNT(*) 
+FROM ATTEND 
+WHERE EMP_NO = 1 
+AND TO_CHAR(START_TIME, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD') 
+AND END_TIME IS NOT NULL
+;
+--SELECT COUNT(*) 
+--FROM ATTEND 
+--WHERE EMP_NO = 1 
+--AND TO_CHAR(START_TIME, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD') 
+--AND TO_CHAR(END_TIME, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+--;
+
+--퇴근 상태 확인하기 
+--SELECT COUNT(*)
+--FROM ATTEND
+--WHERE EMP_NO = 2
+--AND START_TIME IS NOT NULL
+--AND END_TIME IS NULL
+--AND TO_CHAR(START_TIME, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+--;
+
+--개인 출퇴근 날짜 및 시간 확인하기 (리스트용)
+SELECT
+    ATTEND_NO
+    ,EMP_NO
+    ,START_TIME
+    ,END_TIME
+FROM ATTEND
+WHERE EMP_NO = 2
+ORDER BY START_TIME DESC
+;
+
+--한 주마다 리스트 출력
+SELECT
+    TRUNC(START_TIME, 'IW') AS WEEK_START_DATE,
+    ATTEND_NO,
+    EMP_NO,
+    START_TIME,
+    END_TIME
+FROM ATTEND
+WHERE EMP_NO = 2
+ORDER BY WEEK_START_DATE, START_TIME
+;
+
 
 
