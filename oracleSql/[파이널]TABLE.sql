@@ -266,11 +266,11 @@ CREATE TABLE EMPLOYEE (
     ,PROFILE                VARCHAR2(3000)
     ,PHONE                  CHAR(11)
     ,HIRE_DATE              DATE            DEFAULT SYSDATE
-    ,ENT_YN                 CHAR(1)         DEFAULT 'N' CHECK(ENT_YN IN ('Y', 'N'))
-    ,ENT_DATE               DATE
-    ,LOGIN_FAIL_NUM         NUMBER
+    ,RETIRE_YN                 CHAR(1)         DEFAULT 'N' CHECK(RETIRE_YN IN ('Y', 'N'))
+    ,RETIRE_DATE               DATE
+    ,LOGIN_FAIL_NUM         NUMBER          DEFAULT 0
     ,LOCK_YN                CHAR(1)         DEFAULT 'N' CHECK(LOCK_YN IN ('Y', 'N'))
-    ,DEPT_NO                NUMBER          NOT NULL
+    ,DEPT_NO                NUMBER
     ,POSITION_NO            NUMBER          NOT NULL
 );
 
@@ -368,10 +368,11 @@ CREATE TABLE TODO (
 );
 
 CREATE TABLE TODO_MANAGER (
-    TODO_MANAGER_NO         NUMBER            
-    ,TODO_NO_MAN            NUMBER     
-    ,DEL_YN                 CHAR(1)         DEFAULT 'N' CHECK(DEL_YN IN ('Y', 'N'))
-    ,PRIMARY KEY(TODO_MANAGER_NO, TODO_NO_MAN)
+              
+   	 TODO_NO_MAN		NUMBER 
+	,TODO_MANAGER_NO	NUMBER      
+   	 ,DEL_YN                 	CHAR(1)         DEFAULT 'N' CHECK(DEL_YN IN ('Y', 'N'))
+    	,PRIMARY KEY(TODO_MANAGER_NO, TODO_NO_MAN)
 );
 
 --ToDo 트리거
@@ -422,26 +423,26 @@ CREATE TABLE SURVEY_RESPONSE (
 
 --지수--------------------------------------------------------------------
 CREATE TABLE ATTEND (
-    ATTEND_NO               NUMBER          PRIMARY KEY
+    ATTEND_NO             NUMBER          PRIMARY KEY
     ,EMP_NO                 NUMBER          NOT NULL
-    ,START_TIME             TIMESTAMP       NOT NULL 
+    ,START_TIME            TIMESTAMP       NOT NULL 
     ,END_TIME               TIMESTAMP       NULL 
-    ,DEL_YN                 CHAR(1)         DEFAULT 'N' CHECK(DEL_YN IN ('Y', 'N'))
+    ,DEL_YN                  CHAR(1)         DEFAULT 'N' CHECK(DEL_YN IN ('Y', 'N'))
 );
 
 CREATE TABLE MESSENGER (
-    MESSEN_NO               NUMBER          PRIMARY KEY
-    ,SENDER_EMP_NO          NUMBER          NOT NULL 
-    ,RECEIVER_EMP_NO        NUMBER          NOT NULL 
-    ,MESSENBOX_TYPE_NO      NUMBER          NULL
-    ,TITLE                  VARCHAR2(100)   NOT NULL
-    ,CONTENT                VARCHAR2(1000)  NOT NULL
-    ,SEND_DATE              TIMESTAMP       NOT NULL 
-    ,READ_YN                CHAR(1)         DEFAULT 'N' CHECK(READ_YN IN ('Y', 'N')) 
-    ,IS_SAVE                CHAR(1)         DEFAULT 'N' CHECK(IS_SAVE IN ('Y', 'N'))  
-    ,UPDATE_DATE            TIMESTAMP       NULL 
-    ,IMPORTANT_YN           CHAR(1)         DEFAULT 'N' CHECK(IMPORTANT_YN IN ('Y', 'N'))
-    ,DEL_YN                 CHAR(1)         DEFAULT 'N' CHECK(DEL_YN IN ('Y', 'N'))
+    MESSEN_NO               		NUMBER          	PRIMARY KEY
+    ,SENDER_EMP_NO        		NUMBER          	NOT NULL 
+    ,RECEIVER_EMP_NO        		NUMBER          	NOT NULL 
+    ,MESSENBOX_TYPE_NO      	NUMBER          	NULL
+    ,TITLE                  		VARCHAR2(100)   	NOT NULL
+    ,CONTENT                		VARCHAR2(1000)  NOT NULL
+    ,SEND_DATE              		TIMESTAMP       	NOT NULL 
+    ,READ_YN                		CHAR(1)         	DEFAULT 'N' CHECK(READ_YN IN ('Y', 'N')) 
+    ,IS_SAVE                		CHAR(1)         	DEFAULT 'N' CHECK(IS_SAVE IN ('Y', 'N'))  
+    ,UPDATE_DATE            		TIMESTAMP       	NULL 
+    ,IMPORTANT_YN           		CHAR(1)         	DEFAULT 'N' CHECK(IMPORTANT_YN IN ('Y', 'N'))
+    ,DEL_YN                 		CHAR(1)         	DEFAULT 'N' CHECK(DEL_YN IN ('Y', 'N'))
 );
 
 CREATE TABLE MESSENBOX_TYPE (
