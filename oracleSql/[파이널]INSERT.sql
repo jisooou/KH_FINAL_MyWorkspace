@@ -167,7 +167,7 @@ VALUES (
     , SYSDATE
 );
 
---임의로 테이블 추가
+--임의로 근태테이블 데이터 추가
 --INSERT INTO ATTEND (
 --    ATTEND_NO,
 --    EMP_NO,
@@ -175,10 +175,10 @@ VALUES (
 --) 
 --VALUES (
 --    SEQ_ATTEND.NEXTVAL,
---    2,
---    TO_TIMESTAMP('2024-08-01 19:47:54.000000000', 'YYYY-MM-DD HH24:MI:SS.FF9')
+--    3,
+--    TO_TIMESTAMP('2024-07-10 19:47:54.000000000', 'YYYY-MM-DD HH24:MI:SS.FF9')
 --);
-
+--COMMIT;
 
 --홈 화면에 사원정보 및 출퇴근 정보 띄우기 (SUBSTR 사용해서 시간 자르기)
 --근데 이 쿼리문 session에 postionNo랑 deptNo 담아줘서(이후 변경함) 사용 안 함. 
@@ -253,17 +253,30 @@ WHERE EMP_NO = 2
 ORDER BY START_TIME DESC
 ;
 
---한 주마다 리스트 출력
+--각각 몇주차인지 계산하여 리스트 출력(1,2,3,4주차.._WEEK_NUM) (리스트용)
+--근데 여기에서 버그가, 달력의 주차를 자동으로 업데이트하는 것이 아니기 때문에 
+--1.근태 출퇴근이 찍힌 날짜들을 기준으로 1주차부터 .... n주차까지 간다. 
+--2.중간에 n주차에 해당하는 날짜가 없을 경우, n-1주차로 계산된다. 
+--(예: 3주차에 해당하는 날짜가 없다. 그러면 실제 4주차에 해당하는 날짜가 DB에 3주차로 찍힌다.)
+WITH WEEK_CALCUL AS (
+    SELECT
+        TRUNC(START_TIME, 'IW') AS WEEK,
+        ATTEND_NO,
+        EMP_NO,
+        START_TIME,
+        END_TIME,
+        DENSE_RANK() OVER (ORDER BY TRUNC(START_TIME, 'IW')) AS weekNum
+    FROM ATTEND
+    WHERE EMP_NO = 1 --이 값 바꿔서 리스트 출력하기 
+)
 SELECT
-    TRUNC(START_TIME, 'IW') AS WEEK_START_DATE,
+    WEEK,
+    weekNum,
     ATTEND_NO,
     EMP_NO,
     START_TIME,
     END_TIME
-FROM ATTEND
-WHERE EMP_NO = 2
-ORDER BY WEEK_START_DATE, START_TIME
-;
-
-
+FROM WEEK_CALCUL
+WHERE weekNum = 1 --이 값 바꿔서 리스트 출력하기 
+ORDER BY WEEK, START_TIME;
 
