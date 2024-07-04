@@ -176,9 +176,9 @@ VALUES (
 --) 
 --VALUES (
 --    SEQ_ATTEND.NEXTVAL,
---    1,
---    TO_TIMESTAMP('2024-06-28 19:47:54.000000000', 'YYYY-MM-DD HH24:MI:SS.FF9'),
---    TO_TIMESTAMP('2024-06-28 19:50:54.000000000', 'YYYY-MM-DD HH24:MI:SS.FF9')
+--    2,
+--    TO_TIMESTAMP('2024-07-02 19:47:54.000000000', 'YYYY-MM-DD HH24:MI:SS.FF9'),
+--    TO_TIMESTAMP('2024-07-02 19:50:54.000000000', 'YYYY-MM-DD HH24:MI:SS.FF9')
 --);
 --COMMIT;
 
@@ -236,7 +236,7 @@ WHERE ATTEND_NO = (
         FETCH FIRST 1 ROWS ONLY
 );
 
---출근 상태 확인하기 (이미 출근한 상태라면 0을 반환) - alreadyStart
+--출근 상태 확인하기 (이미 출근한 상태라면 0을 반환) - alreadyStart()
 SELECT COUNT(*)
 FROM ATTEND
 WHERE EMP_NO = 2
@@ -245,7 +245,7 @@ AND END_TIME IS NULL
 AND TO_CHAR(START_TIME, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
 ;
 
---오늘 출퇴근 상태 확인하기 - alreadyAttend
+--오늘 출퇴근 상태 확인하기 - alreadyAttend()
 SELECT COUNT(*) 
 FROM ATTEND 
 WHERE EMP_NO = 1 
@@ -273,30 +273,36 @@ WHERE EMP_NO = 2
 ORDER BY START_TIME DESC
 ;
 
---각각 몇주차인지 계산하여 리스트 출력(1,2,3,4주차.._WEEK_NUM) (리스트용)
---근데 여기에서 버그가, 달력의 주차를 자동으로 업데이트하는 것이 아니기 때문에 
---1.근태 출퇴근이 찍힌 날짜들을 기준으로 1주차부터 .... n주차까지 간다. 
---2.중간에 n주차에 해당하는 날짜가 없을 경우, n-1주차로 계산된다. 
---(예: 3주차에 해당하는 날짜가 없다. 그러면 실제 4주차에 해당하는 날짜가 DB에 3주차로 찍힌다.)
+--이해가 꼭 필요한 쿼리문
+--1.특정 사원의 출퇴근 기록을 조회하여 2.기록을 월별로 나누고 3.월 내에서 몇 번째 주에 해당하는지 계산하고 4.총 시간(퇴근-출근)을 계산하여(시간/분 따로) 5.결과를 정렬해 준다. (나의 근태기록 리스트용)
+--결과에서 x시간 x분으로 나타내기 위해서 계산하여 아래 TOTAL_WORK와 같이 나타낸다. 
 WITH WEEK_CALCUL AS (
-    SELECT
-        TRUNC(START_TIME, 'IW') AS WEEK,
-        ATTEND_NO,
-        EMP_NO,
-        START_TIME,
-        END_TIME,
-        DENSE_RANK() OVER (ORDER BY TRUNC(START_TIME, 'IW')) AS weekNum
-    FROM ATTEND
-    WHERE EMP_NO = 1 --이 값 바꿔서 리스트 출력하기 
+            SELECT
+                ATTEND_NO,
+                EMP_NO,
+                START_TIME,
+                END_TIME,
+                TO_CHAR(START_TIME, 'MM') AS MONTH_NUM,
+                CEIL(EXTRACT(DAY FROM START_TIME) / 7) AS WEEK_IN_MONTH,
+                ROUND(
+                    (TO_DATE(TO_CHAR(END_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') -
+                     TO_DATE(TO_CHAR(START_TIME, 'HH24:MI:SS'), 'HH24:MI:SS')) * 24 
+                ) AS TOTAL_HOUR,
+                ROUND(
+                    (TO_DATE(TO_CHAR(END_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') -
+                     TO_DATE(TO_CHAR(START_TIME, 'HH24:MI:SS'), 'HH24:MI:SS')) * 24 * 60
+                ) AS TOTAL_MINUTES
+            FROM ATTEND
+            WHERE EMP_NO = 1 --사원번호로 알아서 바꾸기 
 )
 SELECT
-    WEEK,
-    weekNum,
     ATTEND_NO,
     EMP_NO,
     START_TIME,
-    END_TIME
+    END_TIME,
+    MONTH_NUM,
+    WEEK_IN_MONTH AS WEEK_NUM,
+    FLOOR(TOTAL_HOUR) || '시간 ' || ROUND((TOTAL_MINUTES - FLOOR(TOTAL_HOUR) * 60)) || '분' AS TOTAL_WORK
 FROM WEEK_CALCUL
-WHERE weekNum = 1 --이 값 바꿔서 리스트 출력하기 
-ORDER BY WEEK, START_TIME;
-
+ORDER BY MONTH_NUM, WEEK_NUM, START_TIME
+;

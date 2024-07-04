@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="./home.css">
+  <!-- 이 부분 추가 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="./home.js"></script>
 </head>
 
@@ -34,6 +36,8 @@
     <div id="container">
         <div id="profile-section">
             <img src="https://sports.chosun.com/news/html/2021/02/19/2021022001001441300094961.jpg" alt="Profile Picture" id="profile-picture">
+            <!-- 이 부분 추가 -->
+            <i class="fa-solid fa-list attend-list"></i>
             <div id="profile-info">
                 <h2>신세경 부장</h2>
                 <h3>인사총무팀</h3>
@@ -48,7 +52,8 @@
                     <div id="button-group">
                         <button id="start-button">출근하기</button>
                         <button id="end-button">퇴근하기</button>
-                        <button id="load-button">새로고침</button>
+                        <i class="fa-solid fa-rotate-right" id="load-button" onclick="location.reload();"></i>
+                        <!-- <button id="load-button">새로고침</button> -->
                     </div>
                 </div>
             </div>
