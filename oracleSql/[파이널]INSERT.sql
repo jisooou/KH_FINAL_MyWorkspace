@@ -117,8 +117,9 @@ WHERE MESSEN_NO = 1;
 
 
 --중요 쪽지 목록 조회(최신순)
-SELECT 
-    E.NAME
+SELECT
+    M.MESSEN_NO
+    , E.NAME
     , M.TITLE
     , M.CONTENT
     , M.SEND_DATE 
@@ -130,7 +131,8 @@ WHERE M.IMPORTANT_YN = 'Y' AND M.RECEIVER_EMP_NO = 1
 UNION ALL
 
 SELECT 
-    E.NAME
+    M.MESSEN_NO
+    , E.NAME
     , M.TITLE
     , M.CONTENT
     , M.SEND_DATE 
@@ -302,7 +304,33 @@ SELECT
     END_TIME,
     MONTH_NUM,
     WEEK_IN_MONTH AS WEEK_NUM,
-    FLOOR(TOTAL_HOUR) || '시간 ' || ROUND((TOTAL_MINUTES - FLOOR(TOTAL_HOUR) * 60)) || '분' AS TOTAL_WORK
+    FLOOR(TOTAL_HOUR) || '시간 ' || ABS(ROUND((TOTAL_MINUTES - FLOOR(TOTAL_HOUR) * 60))) || '분' AS TOTAL_WORK
 FROM WEEK_CALCUL
 ORDER BY MONTH_NUM, WEEK_NUM, START_TIME
 ;
+
+
+
+------------------------------------------------------------------
+--GPT
+SELECT
+    MESSEN_NO AS messenNo,
+    SENDER_EMP_NO AS senderEmpNo,
+    RECEIVER_EMP_NO AS receiverEmpNo,
+    TITLE,
+    CONTENT,
+    SEND_DATE AS sendDate,
+    IMPORTANT_YN AS importantYn
+FROM
+    MESSENGER
+WHERE
+    (SENDER_EMP_NO = 2 OR RECEIVER_EMP_NO = 2) 
+    AND IMPORTANT_YN = 'Y'
+ORDER BY
+    SEND_DATE DESC;
+
+
+UPDATE messenger
+SET IMPORTANT_YN = 'Y'
+WHERE MESSEN_NO = 1 
+AND (SENDER_EMP_NO = 2 OR receiver_emp_no = 28);
