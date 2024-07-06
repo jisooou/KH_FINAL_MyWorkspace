@@ -150,7 +150,28 @@ SET IMPORTANT_YN = 'Y'
 WHERE MESSEN_NO = 1;
 
 --검색기능 - 사원 이름으로 검색 
+SELECT 
+    M.MESSEN_NO
+    , E.NAME
+    , M.TITLE
+    , M.CONTENT
+    , M.SEND_DATE 
+FROM MESSENGER M 
+JOIN EMPLOYEE E ON M.SENDER_EMP_NO = E.NO 
+WHERE E.NAME LIKE '%' || '제' || '%'
+AND M.RECEIVER_EMP_NO = 1
+ORDER BY M.SEND_DATE DESC
+;
 
+--중요 쪽지 -> 정리 하기 꼭
+SELECT M.MESSEN_NO, E.NAME, M.TITLE, M.CONTENT, M.SEND_DATE
+FROM MESSENGER M
+JOIN EMPLOYEE E ON M.RECEIVER_EMP_NO = E.NO
+JOIN MESSENGER_STATUS MS ON M.MESSEN_NO = MS.MESSEN_NO
+WHERE MS.EMP_NO = 1 AND MS.IS_IMPORTANT = 'Y'
+ORDER BY M.SEND_DATE DESC;
+
+--휴지통으로 이동하는 기능 (체크박스-개별선택과 전체선택 모두 가능)
 
 
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -311,26 +332,22 @@ ORDER BY MONTH_NUM, WEEK_NUM, START_TIME
 
 
 
+
+
+
+
 ------------------------------------------------------------------
 --GPT
-SELECT
-    MESSEN_NO AS messenNo,
-    SENDER_EMP_NO AS senderEmpNo,
-    RECEIVER_EMP_NO AS receiverEmpNo,
-    TITLE,
-    CONTENT,
-    SEND_DATE AS sendDate,
-    IMPORTANT_YN AS importantYn
-FROM
-    MESSENGER
-WHERE
-    (SENDER_EMP_NO = 2 OR RECEIVER_EMP_NO = 2) 
-    AND IMPORTANT_YN = 'Y'
-ORDER BY
-    SEND_DATE DESC;
+--중요쪽지: 중요 체크박스를 눌렀을 경우, 체크 유지 및 체크 해제 기능 -> 그런데 해결 못 함. 
+SELECT M.MESSEN_NO, E.NAME, M.TITLE, M.CONTENT, M.SEND_DATE 
+FROM MESSENGER M 
+JOIN EMPLOYEE E ON M.SENDER_EMP_NO = E.NO 
+JOIN MESSENGER_STATUS MS ON M.MESSEN_NO = MS.MESSEN_NO
+WHERE MS.EMP_NO = #{empNo} AND MS.IS_IMPORTANT = 'Y' 
+ORDER BY M.SEND_DATE DESC;
 
 
-UPDATE messenger
-SET IMPORTANT_YN = 'Y'
-WHERE MESSEN_NO = 1 
-AND (SENDER_EMP_NO = 2 OR receiver_emp_no = 28);
+
+INSERT INTO MESSENGER_STATUS (MESSEN_NO, EMP_NO, IS_IMPORTANT)
+VALUES (#{messenNo}, #{empNo}, 'Y') 
+ON DUPLICATE KEY UPDATE IS_IMPORTANT = 'Y';
