@@ -459,6 +459,48 @@ ORDER BY MONTH_NUM, WEEK_NUM, START_TIME
 ;
 
 
+--개인 출퇴근 날짜(달.일) 검색하기 (리스트에서 검색하기 기능)
+--아래와 같이 쿼리문을 작성하면, x월x주차 & 총 시간이 나오지 않는다.
+SELECT
+    ATTEND_NO
+    ,EMP_NO
+    ,START_TIME
+    ,END_TIME
+FROM ATTEND
+WHERE TO_CHAR(START_TIME, 'MMDD') = '0704'
+ORDER BY START_TIME DESC
+;
+--아래와 같이 작성해야 전부 나온다. (이 쿼리문은 나의 근태 리스트 쿼리문과 동일, WHERE절만 추가)
+WITH WEEK_CALCUL AS (
+            SELECT
+                ATTEND_NO,
+                EMP_NO,
+                START_TIME,
+                END_TIME,
+                TO_CHAR(START_TIME, 'MM') AS MONTH_NUM,
+                CEIL(EXTRACT(DAY FROM START_TIME) / 7) AS WEEK_IN_MONTH,
+                ROUND(
+                    (TO_DATE(TO_CHAR(END_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') -
+                     TO_DATE(TO_CHAR(START_TIME, 'HH24:MI:SS'), 'HH24:MI:SS')) * 24 
+                ) AS TOTAL_HOUR,
+                ROUND(
+                    (TO_DATE(TO_CHAR(END_TIME, 'HH24:MI:SS'), 'HH24:MI:SS') -
+                     TO_DATE(TO_CHAR(START_TIME, 'HH24:MI:SS'), 'HH24:MI:SS')) * 24 * 60
+                ) AS TOTAL_MINUTES
+            FROM ATTEND
+)
+SELECT
+    ATTEND_NO,
+    EMP_NO,
+    START_TIME,
+    END_TIME,
+    MONTH_NUM,
+    WEEK_IN_MONTH AS WEEK_NUM,
+    FLOOR(TOTAL_HOUR) || '시간 ' || ABS(ROUND((TOTAL_MINUTES - FLOOR(TOTAL_HOUR) * 60))) || '분' AS TOTAL_WORK
+FROM WEEK_CALCUL
+WHERE TO_CHAR(START_TIME, 'MM') = '07'
+ORDER BY MONTH_NUM, WEEK_NUM, START_TIME
+;
 
 
 
