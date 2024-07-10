@@ -503,6 +503,30 @@ ORDER BY MONTH_NUM, WEEK_NUM, START_TIME
 ;
 
 
+--전체 사원 근태관리 리스트. 인사부만 사원들 근태관리를 볼 수 있다. (인사부-DEPT_NO=1)
+--아래 쿼리문은 사원의 중복된 값이 나온다.
+SELECT 
+    E.NAME
+    , A.START_TIME
+    , A.END_TIME
+FROM ATTEND A
+JOIN EMPLOYEE E ON  E.NO = A.EMP_NO
+;
+--중복된 사원값 없이 출력한다. (전체 사원 근태관리 리스트)
+SELECT 
+    E.NAME,
+    A.START_TIME,
+    A.END_TIME
+FROM EMPLOYEE E
+JOIN (
+    SELECT 
+        EMP_NO,
+        MAX(START_TIME) AS START_TIME
+    FROM ATTEND
+    GROUP BY EMP_NO
+) LATEST ON E.NO = LATEST.EMP_NO
+JOIN ATTEND A ON LATEST.EMP_NO = A.EMP_NO AND LATEST.START_TIME = A.START_TIME
+;
 
 
 

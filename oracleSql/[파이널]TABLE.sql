@@ -289,19 +289,19 @@ CREATE TABLE DEPARTMENT (
 
 CREATE TABLE CALENDAR (
     NO                      		NUMBER          		PRIMARY KEY
-    ,START_DATE             		DATE            		NOT NULL
-    ,END_DATE             	  	DATE            		NOT NULL
+    ,START_DATE             	 DATE            		NOT NULL        
+    ,END_DATE                 	 DATE            		NOT NULL        
     ,TITLE                  		VARCHAR2(100)   		NOT NULL
-    ,OPEN_RANGE_NO          	NUMBER         		NOT NULL
+    ,OPEN_RANGE_NO          	    NUMBER         		    NOT NULL
     ,CONTENT                		VARCHAR2(3000)  
-    ,PLACE_NAME        	           VARCHAR2(1000)  
-    ,DEL_YN              		CHAR(1)     	   	DEFAULT 'N' CHECK(DEL_YN IN ('Y', 'N'))
-    ,INSERT_DATE         		DATE          	 	DEFAULT SYSDATE
-    ,UPDATE_DATE      	    	DATE            
-    ,LATITUDE			VARCHAR2(10)
-    ,LONGITUDE     		VARCHAR2(10)
-    ,EMP_NO         	  	NUMBER       
-   ,ADMIN_NO			NUMBER
+    ,PLACE_NAME        	           VARCHAR2(100)  
+    ,DEL_YN              	    	CHAR(1)     	    	DEFAULT 'N' CHECK(DEL_YN IN ('Y', 'N'))
+    ,INSERT_DATE         	    	DATE          	 	    DEFAULT SYSDATE
+    ,UPDATE_DATE      	         	DATE
+    ,LATITUDE			            VARCHAR2(10)
+    ,LONGITUDE     		            VARCHAR2(10)
+    ,EMP_NO         	          	NUMBER
+   ,ADMIN_NO			            NUMBER
 );
 
 CREATE TABLE OPEN_RANGE (
@@ -517,7 +517,7 @@ CREATE TABLE WISHLIST_BOARD (
     BOARD_WISH_NO       INT          
     ,NOTICE_WISH_NO     INT       
     ,EMP_NO             INT
-    ,PRIMARY KEY(EMP_NO)
+    ,PRIMARY KEY(EMP_NO , BOARD_WISH_NO , NOTICE_WISH_NO)
     ,FOREIGN KEY(BOARD_WISH_NO) REFERENCES BOARD(BOARD_NO)
     ,FOREIGN KEY(NOTICE_WISH_NO) REFERENCES NOTICE_BOARD(NOTICE_NO)
     ,FOREIGN KEY (EMP_NO)     REFERENCES EMPLOYEE(NO)
