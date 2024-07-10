@@ -13,59 +13,74 @@
 
     <body>
 
-      <nav>
-         <div id="right-sidebar">
-           <div><button><img src="../resources/img/free-icon-menu-2791777.png" alt=""></button></div>
-           <div><img src="../resources/img/스크린샷 2024-06-18 195610.png" alt=""></div>
-           <div id="title">게시판</div>
-         </div>
-         <div id="left-sidebar">
-           <div><a href=""><img src="../resources/img/스크린샷 2024-06-18 195610.png" alt=""></a></div>
-           <div><a href=""><img src="../resources/img/스크린샷 2024-06-18 195610.png" alt=""></a></div>
-           <div><a href=""><img src="../resources/img/스크린샷 2024-06-18 195610.png" alt=""></a></div>
-           <div><a href=""><img src="../resources/img/스크린샷 2024-06-18 195610.png" alt=""></a></div>
-           <div><a href=""><img src="../resources/img/스크린샷 2024-06-18 195610.png" alt=""></a></div>
-           <div><a href=""><img src="../resources/img/스크린샷 2024-06-18 195610.png" alt=""></a></div>
-           <div><a href=""><img src="../resources/img/스크린샷 2024-06-18 195610.png" alt=""></a></div>
-           <div><a href=""><img src="../resources/img/스크린샷 2024-06-18 195610.png" alt=""></a></div>
-           <div><button><img src="../resources/img/free-icon-person-11081570.png" alt=""></button></div>
-         </div>
-    </nav>
+        <nav>
+           <div id="right-sidebar">
+             <div><button><img src="../resources/img/free-icon-menu-2791777.png" alt=""></button></div>
+             <div><img src="../resources/img/스크린샷 2024-06-18 195610.png" alt=""></div>
+             <div id="title">게시판</div>
+           </div>
+           <div id="left-sidebar">
+             <div><a href=""><img src="../resources/img/스크린샷 2024-06-18 195610.png" alt=""></a></div>
+             <div><a href=""><img src="../resources/img/스크린샷 2024-06-18 195610.png" alt=""></a></div>
+             <div><a href=""><img src="../resources/img/스크린샷 2024-06-18 195610.png" alt=""></a></div>
+             <div><a href=""><img src="../resources/img/스크린샷 2024-06-18 195610.png" alt=""></a></div>
+             <div><a href=""><img src="../resources/img/스크린샷 2024-06-18 195610.png" alt=""></a></div>
+             <div><a href=""><img src="../resources/img/스크린샷 2024-06-18 195610.png" alt=""></a></div>
+             <div><a href=""><img src="../resources/img/스크린샷 2024-06-18 195610.png" alt=""></a></div>
+             <div><a href=""><img src="../resources/img/스크린샷 2024-06-18 195610.png" alt=""></a></div>
+             <div><button><img src="../resources/img/free-icon-person-11081570.png" alt=""></button></div>
+           </div>
+      </nav>
 
-    <main>
-        <div id="all-list">
-            <div id="employee-infor">
-                <div id="name-search">
-                    <div><input type="text" id="name-search-keyword" name="nameSearch" placeholder="사원명을 입력해주세요."></div>
-                    <div><input type="button" value="검색" onclick="searchByName()"></div>
-                </div>
-                <br>
-            </div>
+      <main>
+          <div id="all-list">
+              <div id="employee-infor">
+                  <div id="name-search">
+                      <div>
+                          <select id="department-select" name="department">
+                              <option value="">부서 선택</option>
+                              <option value="hr">인사부</option>
+                              <option value="manage">총무부</option>
+                              <option value="dev">개발부</option>
+                              <option value="busin">영업부</option>
+                          </select>
+                      </div>
+                      <div>
+                          <input type="text" id="name-search-keyword" name="nameSearch" placeholder="사원명을 입력해주세요.">
+                      </div>
+                      <div>
+                        <input type="button" value="검색" onclick="searchByName()">
+                      </div>
+                  </div>
+                  <br>
+              </div>
 
-            <table class="attend-table">
-                <thead>
-                    <tr>
-                        <th>사원명</th>
-                        <th>출근 시간</th>
-                        <th>퇴근 시간</th>
-                        <th>퇴근 시간</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="attend" items="${attendList}">
-                        <tr>
-                            <td></td>
+              <table class="attend-table">
+                  <thead>
+                      <tr>
+                          <th>이름</th>
+                          <th>직급</th>
+                          <th>부서</th>
+                          <th>출근 시간</th>
+                          <th>퇴근 시간</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <c:forEach var="attend" items="${attendList}">
+                          <tr>
+                            <td>${attend.empName}</td>
+                            <td>${attend.positionName}</td>
+                            <td>${attend.deptName}</td>
                             <td>${attend.startTime}</td>
                             <td>${attend.endTime}</td>
-                            <td></td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </div>
-    </main>
+                          </tr>
+                      </c:forEach>
+                  </tbody>
+              </table>
+          </div>
+      </main>
 
 
-  </body>
+    </body>
 
     </html>
