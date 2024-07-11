@@ -532,20 +532,74 @@ JOIN DEPARTMENT D ON E.DEPT_NO = D.NO
 JOIN POSITION P ON E.POSITION_NO = P.NO
 ;
 
---전체사원 근태조회 - 검색기능
---이름&부서
+
+--전체사원 근태관리 리스트. - 검색기능
+--이름 || 부서 || 이름&&부서 로 검색 
+--중복값 없애기+최근 근태로 나타내기 위해 쿼리문 작성 
+--JSP에서 사용하기 위해 별칭 붙여야 한다. 
 SELECT 
-    A.*
-    , E.NAME as empName
-    , D.NAME as deptName
-    , P.NAME as positionName 
-FROM ATTEND A 
-JOIN EMPLOYEE E ON A.EMP_NO = E.NO 
+    E.NAME AS empName
+    , D.NAME AS deptName
+    , P.NAME AS positionName
+    , A.START_TIME AS startTime
+    , A.END_TIME AS endTime 
+FROM EMPLOYEE E 
+JOIN ( 
+    SELECT EMP_NO
+    , MAX(START_TIME) AS START_TIME 
+    FROM ATTEND GROUP BY EMP_NO 
+    ) 
+LATEST ON E.NO = LATEST.EMP_NO 
+JOIN ATTEND A ON LATEST.EMP_NO = A.EMP_NO 
+AND LATEST.START_TIME = A.START_TIME 
 JOIN DEPARTMENT D ON E.DEPT_NO = D.NO 
 JOIN POSITION P ON E.POSITION_NO = P.NO 
-WHERE E.NAME LIKE '%' || '한' || '%' 
-AND E.DEPT_NO = 1
+WHERE E.NAME LIKE '%' || #{nameSearch} || '%' AND E.DEPT_NO = #{deptSearch}
 ;
+--이름으로 검색
+SELECT 
+    E.NAME AS empName
+    , D.NAME AS deptName
+    , P.NAME AS positionName
+    , A.START_TIME AS startTime
+    , A.END_TIME AS endTime 
+FROM EMPLOYEE E 
+JOIN ( 
+    SELECT EMP_NO
+    , MAX(START_TIME) AS START_TIME 
+    FROM ATTEND GROUP BY EMP_NO 
+    ) 
+LATEST ON E.NO = LATEST.EMP_NO 
+JOIN ATTEND A ON LATEST.EMP_NO = A.EMP_NO 
+AND LATEST.START_TIME = A.START_TIME 
+JOIN DEPARTMENT D ON E.DEPT_NO = D.NO 
+JOIN POSITION P ON E.POSITION_NO = P.NO 
+WHERE E.NAME LIKE '%' || #{nameSearch} || '%'
+;
+--부서로 검색
+SELECT 
+    E.NAME AS empName
+    , D.NAME AS deptName
+    , P.NAME AS positionName
+    , A.START_TIME AS startTime
+    , A.END_TIME AS endTime 
+FROM EMPLOYEE E 
+JOIN ( 
+    SELECT EMP_NO
+    , MAX(START_TIME) AS START_TIME 
+    FROM ATTEND GROUP BY EMP_NO 
+    ) 
+LATEST ON E.NO = LATEST.EMP_NO 
+JOIN ATTEND A ON LATEST.EMP_NO = A.EMP_NO 
+AND LATEST.START_TIME = A.START_TIME 
+JOIN DEPARTMENT D ON E.DEPT_NO = D.NO 
+JOIN POSITION P ON E.POSITION_NO = P.NO 
+WHERE E.DEPT_NO = #{deptSearch}
+;
+
+
+
+
 
 
 
