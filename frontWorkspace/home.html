@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="./home.css">
   <!-- 이 부분 추가 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <script src="./home.js"></script>
+  <script defer src="./home.js"></script>
 </head>
 
 <body>
@@ -61,9 +61,15 @@
         <div id="main-section">
             <div id="left-section">
                 <div id="board">
-                    <h3>필요한 거</h3>
-                    <p>작성</p>
-                    <p></p>
+                    <section id="memo-container">
+                        <div id="memo-box">
+                          <textarea id="memo-content" cols="30" rows="13" placeholder="메모를 적어주세요."></textarea>
+                          <div id="button-container">
+                            <button id="save-button">저 장</button>
+                            <button id="clear-button">초기화</button>
+                          </div>
+                        </div>
+                    </section>
                 </div>
                 <div id="documents">
                     <h3>필요한 거</h3>

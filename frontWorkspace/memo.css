@@ -5,6 +5,7 @@
   font-weight: normal;
   font-style: normal;
 }
+
 * {
   box-sizing: border-box;
   font-family: 'NanumSquareNeo-Variable';
@@ -15,7 +16,6 @@ body {
 }
 
 button {
-  /* box-shadow: inset 0px 0px 0px 2px lightcoral; */
   background: none;
   border: none;
   padding: 10px;
@@ -35,12 +35,9 @@ button {
   font-size: 20px;
 }
 
-/* ========== 메모 패드 (왼쪽) ========== */
 .memo-pad {
-  /* box-shadow: inset 0px 0px 0px 2px blue; */
   position: relative;
-  width: 40%;
-  flex-shrink: 0;
+  width: 100%;
   padding: 30px 0;
 }
 
@@ -53,19 +50,13 @@ button {
   margin-bottom: 20px;
 }
 
-.saveBtn {
-  margin-bottom: 0;
-}
-
-.memo-title {
-  padding: 20px;
-  font-weight: bold;
-  font-size: 22px;
-}
-
 .memo-content {
   font-size: 20px;
   padding: 20px;
+  height: 300px; /* Adjust height as needed */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
 }
 
 .saveBtn {
@@ -73,65 +64,9 @@ button {
   font-weight: bold;
   padding: 15px;
   background-color: white;
+  cursor: pointer;
 }
 
-/* ========== 메모 리스트 (오른쪽) ========== */
-.memo-list {
-  width: 60%;
-  height: 95vh;
-  overflow: scroll;
-  overflow-x: hidden;
-  padding: 30px;
-}
-
-.memo-list::-webkit-scrollbar {
-  background-color: transparent;
-  width: 17px;
-}
-
-.memo-list::-webkit-scrollbar-thumb {
-  background-color: lightcoral;
-  background-clip: padding-box;
-  border: 3px solid transparent;
-  border-radius: 50px;
-}
-.list-article {
-  background-color: rgb(256, 256, 256, 0.9);
-  box-shadow: inset 0px 0px 0px 2px lightcoral;
-  border-radius: 20px;
-  margin-bottom: 40px;
-  padding: 20px;
-}
-
-.list-title {
-  font-size: 25px;
-  font-weight: bold;
-}
-.list-content {
-  letter-spacing: 2px;
-}
-
-.btnWrap {
-  text-align: right;
-}
-
-.editBtn {
-  margin-right: 10px;
-}
-
-@media (max-width: 900px) {
-  .main {
-    flex-direction: column;
-    width: 95%;
-    max-width: none;
-  }
-  .memo-pad {
-    width: 100%;
-  }
-  .memo-list {
-    padding: 0;
-    width: 100%;
-    height: inherit;
-    overflow: auto;
-  }
+.saveBtn:hover {
+  background-color: #f0f0f0;
 }
