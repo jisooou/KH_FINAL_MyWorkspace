@@ -110,6 +110,9 @@ main {
     padding: 20px;
     /* 프로필쪽 div 높이설정!!! 필요에 따라 바꾸기. */
     height: 85vh; 
+    
+    /* 전체 container 높이 위치 설정 */
+    margin-bottom: 20px;
 }
 
 /* ----------------- */
