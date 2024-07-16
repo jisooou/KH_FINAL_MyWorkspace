@@ -143,7 +143,7 @@ main {
     position: absolute;
     top: 20px;
     right: 20px;
-    font-size: 2em; /* 원하는 크기로 조정 */
+    font-size: 2.5em; /* 원하는 크기로 조정 */
     color: black; /* 원하는 색상으로 조정 */
     cursor: pointer;
 }
@@ -169,7 +169,8 @@ main {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
+    border: 2px solid #696868;
+    width: 300px;
     border-radius: 5px;
     padding: 5px;
     background-color: #fff;
@@ -185,7 +186,7 @@ main {
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-top: 20%;
+    margin-top: 10%;
 }
 
 #start-button{
@@ -197,6 +198,7 @@ main {
     cursor: pointer;
     height: 50px;
     font-size: large;
+    width: 150px;
 }
 #end-button{
     padding: 5px 10px;
@@ -207,6 +209,7 @@ main {
     cursor: pointer;
     height: 50px;
     font-size: large;
+    width: 150px;
 }
 #load-button {
     /* background-color: #f0f0f0;

@@ -88,7 +88,8 @@ th {
   font-size: 16px;
   border: 2px solid #777676;
   border-radius: 5px;
-  width: 280px;
+  width: 330px;
+  height: 30px;
   transition: border-color 0.3s;
 }
 #date-search-keyword:focus {
@@ -106,6 +107,8 @@ th {
   border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s;
+  height: 55px;
+  width: 80px;
 }
 
 #date-search input[type="button"]:hover {
